@@ -17,33 +17,32 @@ plus a message form powered by EmailJS.
 
 ## Live Site
 
-Deployed via [cleverotter.eu](https://cleverotter.eu).
+[https://hellowasim.myotter.dev](https://hellowasim.myotter.dev)
 
 ## Project Structure
 
 ```
 .
-└── dist/
-    ├── index.html
-    ├── styles.css
-    ├── script.js
-    └── Image.jpeg
+├── index.html
+├── styles.css
+├── script.js
+└── Image.jpeg
 ```
 
 ## Deployment
 
-This is a static site. The deployable files live in the `dist/` folder.
+This is a static site. Deployable files are in the root directory.
 
 - Install command: none
 - Build command: none
-- Publish folder: `dist`
+- Publish folder: `/`
 
 ## Local Preview
 
-Open `dist/index.html` in your browser, or serve the folder:
+Open `index.html` in your browser, or serve the folder:
 
 ```bash
-npx serve dist
+npx serve .
 ```
 
 ## Contact
