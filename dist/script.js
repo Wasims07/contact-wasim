@@ -8,7 +8,7 @@
     var el = document.getElementById("role");
     var i = 0;
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // year display removed
 
     /* ---- rotating quote (random, never the same twice in a row) ---- */
     var QUOTES = [
@@ -150,100 +150,19 @@
       say("Message cleared.");
     });
 
-    /* ---- mobile full-page slider (slides between the two pages) ---- */
-    (function fullpageSlider() {
+    /* ---- mobile: use normal page scroll (refreshable) ---- */
+    (function disableFullpageOnMobile() {
       var mq = window.matchMedia("(max-width: 768px)");
-      var panel = document.querySelector(".panel");
-      var black = document.querySelector(".black");
-      var pages = [panel, black];
-      var current = 0, animating = false, locked = false;
-
-      function apply() {
-        for (var i = 0; i < pages.length; i++) {
-          // each page slides up by (current * 100%); page below starts at +100%
-          var offset = (i - current) * 100;
-          pages[i].style.transform = "translateY(" + offset + "%)";
-        }
-      }
-
-      function enable() {
-        document.documentElement.classList.add("fp-active");
-        document.body.classList.add("fp-active");
-        current = 0;
-        apply();
-      }
-
       function disable() {
         document.documentElement.classList.remove("fp-active");
         document.body.classList.remove("fp-active");
-        for (var i = 0; i < pages.length; i++) pages[i].style.transform = "";
+        var panel = document.querySelector(".panel");
+        var black = document.querySelector(".black");
+        if (panel) panel.style.transform = "";
+        if (black) black.style.transform = "";
       }
-
-      function go(dir) {
-        if (animating || locked) return;
-        var next = current + dir;
-        if (next < 0 || next >= pages.length) return;
-        current = next;
-        animating = true;
-        apply();
-        setTimeout(function () { animating = false; }, 650);
-      }
-
-      function onModeChange() {
-        if (mq.matches) enable(); else disable();
-      }
-
-      if (mq.addEventListener) mq.addEventListener("change", onModeChange);
-      else if (mq.addListener) mq.addListener(onModeChange);
-      if (mq.matches) enable();
-
-      /* wheel */
-      var wheelLock = false;
-      window.addEventListener("wheel", function (e) {
-        if (!mq.matches) return;
-        e.preventDefault();
-        if (wheelLock || animating) return;
-        if (Math.abs(e.deltaY) < 8) return;
-        wheelLock = true;
-        go(e.deltaY > 0 ? 1 : -1);
-        setTimeout(function () { wheelLock = false; }, 700);
-      }, { passive: false });
-
-      /* touch */
-      var startY = 0, startX = 0, tracking = false;
-      window.addEventListener("touchstart", function (e) {
-        if (!mq.matches || e.touches.length !== 1) return;
-        // let the form scroll internally when on page 2
-        if (current === 1 && e.target.closest("input, textarea, .dialpop, .diallist")) return;
-        tracking = true;
-        startY = e.touches[0].clientY;
-        startX = e.touches[0].clientX;
-      }, { passive: true });
-
-      window.addEventListener("touchmove", function (e) {
-        if (!mq.matches || !tracking) return;
-        // allow native scroll inside the contact card when needed
-        if (current === 1) {
-          var card = document.querySelector(".black .card");
-          if (card && card.contains(e.target)) return;
-        }
-        e.preventDefault();
-      }, { passive: false });
-
-      window.addEventListener("touchend", function (e) {
-        if (!mq.matches || !tracking) return;
-        tracking = false;
-        var dy = e.changedTouches[0].clientY - startY;
-        var dx = e.changedTouches[0].clientX - startX;
-        if (Math.abs(dy) < 45 || Math.abs(dy) < Math.abs(dx)) return;
-        go(dy < 0 ? 1 : -1);
-      }, { passive: true });
-
-      /* keyboard */
-      window.addEventListener("keydown", function (e) {
-        if (!mq.matches) return;
-        if (e.key === "ArrowDown" || e.key === "PageDown") { e.preventDefault(); go(1); }
-        else if (e.key === "ArrowUp" || e.key === "PageUp") { e.preventDefault(); go(-1); }
-      });
+      disable();
+      if (mq.addEventListener) mq.addEventListener("change", disable);
+      else if (mq.addListener) mq.addListener(disable);
     })();
   })();

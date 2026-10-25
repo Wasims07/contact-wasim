@@ -1,0 +1,35 @@
+# Profile Page - About
+Last updated: 2026-10-24
+
+## Overview
+A clean, two-panel contact/profile page for Mohamed Wasim.
+- Left panel: Profile details, contact links (Dubai location + coordinates shown)
+- Right panel: Contact form with EmailJS integration
+
+## Tech Stack
+- HTML5, CSS3, Vanilla JavaScript
+- EmailJS for direct form submissions
+- Responsive design (desktop split + mobile full-page slider)
+
+## Files for Deployment
+- index.html - Main page
+- styles.css - Styles & responsive layout
+- script.js  - Animations, form validation, EmailJS, mobile slider
+- Image.jpeg - Profile photo
+
+## Optional/Dev Files (can skip)
+- _shot.html  - Screenshot variant (not used)
+- About.txt   - Documentation
+
+## Hosting
+Plan to host on cleverotter.eu (Nuremberg, EU).
+- Static hosting, free tier (100 GB/month, unlimited sites)
+- Deploy via SCP/SFTP/rsync or GitHub (app.cleverotter.eu)
+- Free SSL, custom domains
+- No build step needed
+
+## Contact Form
+- EmailJS configured (Service/Template/Public Key in script.js)
+- Phone is optional (plain input)
+- Validates name, email, message
+- Mobile-friendly with touch support
